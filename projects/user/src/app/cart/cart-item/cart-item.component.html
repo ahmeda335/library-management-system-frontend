@@ -1,0 +1,108 @@
+@if (!book) {
+<div class="animate-pulse flex gap-6 py-6">
+  <div class="w-24 h-24 bg-gray-200 rounded-xl"></div>
+  <div class="flex-1 space-y-4">
+    <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+    <div class="h-3 bg-gray-200 rounded w-1/3"></div>
+  </div>
+</div>
+} @if (book) {
+<div
+  class="flex flex-col sm:flex-row sm:items-center gap-4 py-6 border-b border-gray-200 group"
+>
+  <!-- Book Image -->
+  <div class="w-24 h-24 shrink-0 mx-auto sm:mx-0">
+    <img
+      [src]="book.cover_image"
+      alt="book cover image"
+      class="rounded-xl object-cover w-full h-full"
+    />
+  </div>
+
+  <!-- Book Info + Actions -->
+  <div class="flex flex-col gap-4 flex-1 w-full">
+    <!-- Book Name and Author -->
+    <div class="sm:flex sm:justify-between sm:items-center">
+      <div>
+        <h6 class="font-semibold text-sm text-center sm:text-left text-black">
+          {{ book.book_name }}
+        </h6>
+        <p class="text-xs text-gray-500 text-center sm:text-left">
+          {{ book.author_name }}
+        </p>
+      </div>
+      <!-- Price -->
+      <p
+        class="font-medium text-sm text-gray-600 sm:text-right text-center mt-2 sm:mt-0 group-hover:text-slate-950"
+      >
+        ${{ book.price }}
+      </p>
+    </div>
+
+    <!-- Quantity Controls and Total -->
+    <div
+      class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+    >
+      <!-- Quantity Buttons -->
+      <div class="flex items-center justify-center sm:justify-start">
+        <button
+          class="group rounded-l-lg px-4 py-2 border border-gray-300 hover:bg-gray-100 transition disabled:opacity-50 disabled:hover:bg-white"
+          (click)="decreaseQuantity()"
+          [disabled]="quantity === 1"
+        >
+          <svg
+            class="stroke-gray-900 group-hover:stroke-black"
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 22 22"
+            fill="none"
+          >
+            <path d="M16.5 11H5.5" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+        <input
+          type="text"
+          class="border-y border-gray-300 w-14 text-center font-semibold text-gray-800 text-base outline-none py-[3px]"
+          [value]="quantity"
+          placeholder="1"
+        />
+        <button
+          class="group rounded-r-lg px-4 py-2 border border-gray-300 hover:bg-gray-100 transition"
+          (click)="increaseQuantity()"
+        >
+          <svg
+            class="stroke-gray-900 group-hover:stroke-black"
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 22 22"
+            fill="none"
+          >
+            <path
+              d="M11 5.5V16.5M16.5 11H5.5"
+              stroke-width="1.6"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Total Price -->
+      <div class="text-center sm:text-right">
+        <p class="font-bold text-lg text-gray-700 group-hover:text-slate-900">
+          ${{ (quantity * +book.price).toFixed(2) }}
+        </p>
+      </div>
+
+      <!-- Trash Icon -->
+      <div
+        class="flex justify-center sm:justify-end text-slate-500 hover:text-red-500 cursor-pointer"
+        (click)="deleteItem()"
+      >
+        <i class="fa fa-trash" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+</div>
+}
